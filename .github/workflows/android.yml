@@ -1,0 +1,40 @@
+name: Android CI Build
+
+on:
+  push:
+    branches: [ "master" ] # Triggers the workflow on pushes to the 'master' branch
+  pull_request:
+    branches: [ "master" ] # Triggers the workflow on pull requests targeting the 'master' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Specifies the operating system for the runner. Ubuntu is standard for Android builds.
+
+    steps:
+    - name: Checkout Repository # Step to get your project code onto the runner
+      uses: actions/checkout@v4 # Uses the official GitHub action for checking out code
+
+    - name: Set up JDK 17 # Sets up the Java Development Kit
+      uses: actions/setup-java@v4 # Uses the official GitHub action for setting up Java
+      with:
+        java-version: '17' # Recommended Java version for modern Android development.
+                          # If you encounter issues, try '11' as some projects might still use it.
+        distribution: 'temurin' # A common and reliable OpenJDK distribution
+        cache: gradle # Caches Gradle dependencies to speed up subsequent builds
+
+    - name: Grant execute permission for gradlew # Makes the Gradle wrapper script executable
+      run: chmod +x gradlew # Essential on Linux-based runners
+
+    - name: Build Debug APK # This step executes the Gradle command to build the debug version of your app
+      run: ./gradlew assembleDebug # 'assembleDebug' compiles your code and packages the debug APK.
+                                  # This is generally sufficient for CI to confirm the project builds.
+                                  # If you want to run all checks (including lint, tests), use './gradlew build' instead.
+
+    - name: Upload Debug APK as Artifact # Uploads the generated APK so you can download it from the workflow run
+      uses: actions/upload-artifact@v4 # Uses the official GitHub action for uploading build artifacts
+      with:
+        name: TPC.10min-debug-apk # The name of the artifact (how it will appear on GitHub)
+        path: app/build/outputs/apk/debug/app-debug.apk # The path to your generated debug APK.
+                                                        # Assumes your main app module is named 'app'.
+                                                        # Adjust 'app/' if your module has a different name.
+        retention-days: 7 # Optional: How many days to keep the artifact. Default is 90 days, 7 is often enough for CI.
