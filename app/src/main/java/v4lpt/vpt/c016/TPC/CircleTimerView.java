@@ -17,7 +17,7 @@ public class CircleTimerView extends View {
     private Paint[] progressPaints;
     private Paint zeigerPaint;
     private Paint zeigerDotPaint;
-    private long totalTimeInMillis = 60 * 60 * 1000; // 1 hour
+    private long totalTimeInMillis = 60 * 10 * 1000; // 1 hour
     private long timeLeftInMillis = totalTimeInMillis;
 
     private float centerX;
@@ -26,7 +26,7 @@ public class CircleTimerView extends View {
 
     private RectF oval;
 
-    private int[] sections = {25, 5, 25, 5};
+    private int[] sections = {3, 2, 3, 2};
 
     public CircleTimerView(Context context) {
         super(context);
