@@ -26,7 +26,7 @@ public class CircleTimerView extends View {
 
     private RectF oval;
 
-    private int[] sections = {3, 2, 3, 2};
+    private int[] sections = {18, 12, 18, 12};
 
     public CircleTimerView(Context context) {
         super(context);
