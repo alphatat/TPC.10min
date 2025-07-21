@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CircleTimerView circleTimerView;
     private CountDownTimer countDownTimer;
-    private long timeLeftInMillis = 60 * 60 * 1000; // 1 hour
+    private long timeLeftInMillis = 60 * 10 * 1000; // 1 hour
     private int currentSection = 0;
     private MediaPlayer shortBreakSound;
     private MediaPlayer longBreakSound;
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private boolean isSoundEnabled = true;
     private boolean isVibrationEnabled = true;
-    private static final long LONG_VIBRATION_DURATION = 3000;
-    private static final long SHORT_VIBRATION_DURATION = 1000;
+    private static final long LONG_VIBRATION_DURATION = 8000;
+    private static final long SHORT_VIBRATION_DURATION = 5000;
     private static final String PREF_SOUND_ENABLED = "sound_enabled";
     private static final String PREF_VIBRATION_ENABLED = "vibration_enabled";
     private static final String TAG = "MainActivity";
@@ -186,8 +186,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkSectionTransition() {
-        int[] sections = {25, 5, 25, 5}; // in minutes
-        long totalTime = 60 * 60 * 1000; // 1 hour in milliseconds
+        int[] sections = {3, 2, 3, 2}; // in minutes
+        long totalTime = 60 * 10 * 1000; // 1 hour in milliseconds
         long elapsedTime = totalTime - timeLeftInMillis;
 
         int newSection = 0;
@@ -310,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        timeLeftInMillis = 60 * 60 * 1000; // Reset to 1 hour
+        timeLeftInMillis = 60 * 10 * 1000; // Reset to 1 hour
         updateTimerUI();
         setContentView(R.layout.welcome_layout);
 
@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
                 // 'true' corresponds to the work session sound/vibration.
                 playTransitionEffects(true);
 
-                timeLeftInMillis = 60 * 60 * 1000; // Reset to 1 hour
+                timeLeftInMillis = 60 * 10 * 1000; // Reset to 1 hour
                 currentSection = 0;
                 startTimer(); // Restart the timer
             }
